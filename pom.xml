@@ -11,6 +11,9 @@
     <modules>
         <module>logger</module>
         <module>upper</module>
+        <module>products</module>
+        <module>users</module>
+        <module>shop</module>
     </modules>
 
     <properties>

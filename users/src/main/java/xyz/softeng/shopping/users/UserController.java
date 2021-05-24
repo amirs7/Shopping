@@ -10,17 +10,20 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserRepository repository;
 
+    private final UserMapper mapper;
+
     private final StreamBridge streamBridge;
 
     @PostMapping
-    public User create(@RequestBody User user) {
-        user = repository.save(user);
-        streamBridge.send("users-out-0", user);
-        return user;
+    public User create(@RequestBody UserDto dto) {
+        User user = mapper.fromDto(dto);
+        return repository.save(user);
     }
 
-    @PutMapping
-    public User update(@RequestBody User user) {
-        return create(user);
+    @PutMapping("/{id}")
+    public User update(@PathVariable Long id, @RequestBody UserDto dto) {
+        User user = repository.findById(id).orElseThrow();
+        user = mapper.update(user, dto);
+        return repository.save(user);
     }
 }

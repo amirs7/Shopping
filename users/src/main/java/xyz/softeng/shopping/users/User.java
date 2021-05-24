@@ -15,11 +15,7 @@ public class User {
 
     private String username;
 
-    private String firstname;
-
-    private String lastname;
-
-    private String address;
+    private String name;
 
     private Integer wealth;
 }

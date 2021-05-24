@@ -24,7 +24,7 @@ public class Application {
     }
 
     @Bean
-    public Consumer<Product> update(ProductRepository productRepository) {
+    public Consumer<Product> updateProduct(ProductRepository productRepository) {
         return product -> {
             log.info("Processing Product: {}", product);
             product = productRepository.save(product);

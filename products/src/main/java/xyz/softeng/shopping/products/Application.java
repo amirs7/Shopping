@@ -14,7 +14,7 @@ public class Application {
     }
 
     @Bean
-    public Consumer<BuyEvent> processBuy(ProductRepository repository) {
+    public Consumer<BuyEvent> buys(ProductRepository repository) {
         return buyEvent -> {
             Product product = repository.findById(buyEvent.getProductId()).orElseThrow();
             product.increaseBuyCount();

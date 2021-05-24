@@ -7,6 +7,10 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    labels:
+      - "SERVICE_5672_NAME=rabbitmq"
+      - "SERVICE_15672_IGNORE=true"
+
   consul:
     image: consul
     container_name: consul
@@ -14,3 +18,37 @@ services:
       - "8500:8500"
       - "8600:8600/udp"
     command: "agent -server -ui -node=server-1 -bootstrap-expect=1 -client=0.0.0.0"
+
+  registrator:
+    image: gliderlabs/registrator
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+    command: consul://localhost:8500
+
+  mysql-server:
+    image: mysql
+    container_name: mysql-server
+    command: --bind-address=0.0.0.0 --default-authentication-plugin=mysql_native_password
+    restart: always
+    volumes:
+      - data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: shopping
+      MYSQL_USER: spring
+      MYSQL_PASSWORD: 1234
+    labels:
+      - "SERVICE_NAME=mysql-server"
+
+#
+#  mysql-admin:
+#    image: adminer
+#    restart: always
+#    environment:
+#      ADMINER_DESIGN: "nette"
+#      ADMINER_DEFAULT_SERVER: "mysql-server"
+
+volumes:
+  data:

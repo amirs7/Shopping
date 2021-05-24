@@ -1,6 +1,7 @@
 package xyz.softeng.shopping.products;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -9,6 +10,7 @@ import javax.persistence.Id;
 
 @Data
 @Entity
+@NoArgsConstructor
 @EntityListeners(ProductUpdateListener.class)
 public class Product {
     @Id
@@ -23,5 +25,10 @@ public class Product {
 
     public void increaseBuyCount() {
         buyCount++;
+    }
+
+    public Product(String name, Integer price) {
+        this.name = name;
+        this.price = price;
     }
 }

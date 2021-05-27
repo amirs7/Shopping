@@ -4,9 +4,10 @@ services:
   rabbitmq:
     image: rabbitmq:3.8-management
     container_name: rabbitmq
-    ports:
-      - "5672:5672"
-      - "15672:15672"
+    network_mode: host
+    expose:
+      - 5672
+      - 15672
     labels:
       - "SERVICE_5672_NAME=rabbitmq"
       - "SERVICE_15672_IGNORE=true"
@@ -14,9 +15,10 @@ services:
   consul:
     image: consul
     container_name: consul
-    ports:
-      - "8500:8500"
-      - "8600:8600/udp"
+    network_mode: host
+    expose:
+      - 8500
+      - 8600/udp
     command: "agent -server -ui -node=server-1 -bootstrap-expect=1 -client=0.0.0.0"
 
   registrator:
@@ -24,12 +26,14 @@ services:
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock
-    command: consul://consul:8500
+    network_mode: host
+    command: consul://localhost:8500
 
   postgres:
     image: postgres
-    ports:
-      - 5432:5432
+    expose:
+      - 5432
+    network_mode: host
     container_name: postgres
     environment:
       - POSTGRES_DB

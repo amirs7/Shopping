@@ -1,6 +1,8 @@
 package xyz.softeng.shopping.shop;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,6 +22,7 @@ public class ShopController {
     private final ProductRepository productRepository;
     private final ShopService shopService;
     private final StreamBridge streamBridge;
+    private final DiscoveryClient discoveryClient;
 
     @GetMapping
     public void buyProduct(@RequestParam Long userId, @RequestParam Long productId) {
@@ -25,5 +31,14 @@ public class ShopController {
         if (!shopService.canBuy(user, product))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         streamBridge.send("shop-out-0", new BuyEvent(userId, productId));
+    }
+
+    @GetMapping("/ser")
+    public URI find() {
+        List<ServiceInstance> list = discoveryClient.getInstances("postgres");
+        if (list != null && list.size() > 0) {
+            return list.get(0).getUri();
+        }
+        return null;
     }
 }

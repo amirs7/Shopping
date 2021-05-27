@@ -18,7 +18,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @SpringBootTest
 @Import(TestChannelBinderConfiguration.class)
 @TestPropertySource(properties = {
-        "spring.cloud.stream.bindings.buys-in-0.destination=test-buys-topic",
+        "spring.cloud.stream.bindings.purchases-in-0.destination=test-buys-topic",
         "spring.cloud.stream.bindings.products-out-0.destination=test-products-topic"
 })
 class ApplicationTest {

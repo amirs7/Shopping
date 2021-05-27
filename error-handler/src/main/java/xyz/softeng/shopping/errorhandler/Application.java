@@ -1,4 +1,4 @@
-package xyz.softeng.shopping.logger;
+package xyz.softeng.shopping.errorhandler;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,7 +16,9 @@ public class Application {
     @Bean
     public Consumer<String> log() {
         return item -> {
-            throw new RuntimeException();
+            System.out.println("######################################");
+            System.out.println(item);
+            System.out.println("######################################");
         };
     }
 }

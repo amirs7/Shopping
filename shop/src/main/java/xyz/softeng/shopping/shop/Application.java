@@ -16,7 +16,7 @@ public class Application {
     }
 
     @Bean
-    public Consumer<User> updateUser(UserRepository userRepository) {
+    public Consumer<User> users(UserRepository userRepository) {
         return user -> {
             log.info("Processing User: {}", user);
             userRepository.save(user);
@@ -24,7 +24,7 @@ public class Application {
     }
 
     @Bean
-    public Consumer<Product> updateProduct(ProductRepository productRepository) {
+    public Consumer<Product> products(ProductRepository productRepository) {
         return product -> {
             log.info("Processing Product: {}", product);
             product = productRepository.save(product);

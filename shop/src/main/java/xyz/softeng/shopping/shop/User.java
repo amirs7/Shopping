@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Data
 @Entity
-@Table(name = "domain_user")
+@Table(name = "shop_user")
 public class User {
     @Id
     private Long id;

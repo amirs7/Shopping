@@ -6,6 +6,7 @@ import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFacto
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.ConditionalRejectingErrorHandler;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainerFactoryConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,9 +14,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitConfiguration {
     @Bean
-    public FanoutExchange exchange(RabbitProperties properties) {
-        return ExchangeBuilder.fanoutExchange(properties.getExchanges().getPurchases())
-                .build();
+    public FanoutExchange exchange(@Value("${shopping.rabbit.exchange.purchases}") String purchasesExchange) {
+        return ExchangeBuilder.fanoutExchange(purchasesExchange).build();
     }
 
     @Bean

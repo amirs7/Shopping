@@ -19,7 +19,7 @@ public class ProductEventHandler {
     @RabbitListener(
             bindings = @QueueBinding(
                     value = @Queue(value = "shop-products-in"),
-                    exchange = @Exchange(value = "${shopping.rabbit.exchanges.products}", declare = "false"))
+                    exchange = @Exchange(value = "${shopping.rabbit.exchange.products}", declare = "false"))
     )
     public void saveNewProduct(Product product) {
         log.info("Saving Product: {}", product);

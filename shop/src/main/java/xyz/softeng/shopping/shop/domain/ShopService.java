@@ -19,7 +19,7 @@ public class ShopService {
         if (!user.canPurchase(product))
             return false;
 
-        PurchaseEvent purchaseEvent = new PurchaseEvent(user.getId(), product.getProductId());
+        PurchaseEvent purchaseEvent = new PurchaseEvent(user.getId(), product.getId(), product.getPrice());
         rabbitTemplate.convertAndSend(purchaseEvent);
         return true;
     }

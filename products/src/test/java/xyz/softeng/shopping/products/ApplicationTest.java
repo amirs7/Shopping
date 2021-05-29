@@ -9,6 +9,7 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.RabbitMQContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import xyz.softeng.shopping.products.domain.Product;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

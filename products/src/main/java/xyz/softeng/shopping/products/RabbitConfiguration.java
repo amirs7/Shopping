@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitConfiguration {
-    @Value("${shopping.exchanges.products}")
+    @Value("${shopping.rabbit.exchange.products}")
     private String productsExchange;
 
     @Bean

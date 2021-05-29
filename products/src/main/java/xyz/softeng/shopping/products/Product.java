@@ -21,12 +21,6 @@ public class Product {
 
     private Integer price;
 
-    private Integer buyCount = 0;
-
-    public void increaseBuyCount() {
-        buyCount++;
-    }
-
     public Product(String name, Integer price) {
         this.name = name;
         this.price = price;

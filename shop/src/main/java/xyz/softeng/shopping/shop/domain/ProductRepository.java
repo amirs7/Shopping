@@ -1,4 +1,4 @@
-package xyz.softeng.shopping.shop;
+package xyz.softeng.shopping.shop.domain;
 
 import org.springframework.data.repository.CrudRepository;
 

@@ -1,4 +1,4 @@
-package xyz.softeng.shopping.shop;
+package xyz.softeng.shopping.shop.domain;
 
 import lombok.Data;
 
@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @Table(name = "shop_product")
 public class Product {
     @Id
-    private Long id;
+    private Long productId;
 
     private Integer price;
 }

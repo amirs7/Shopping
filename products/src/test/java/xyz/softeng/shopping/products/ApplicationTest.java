@@ -1,60 +1,36 @@
 package xyz.softeng.shopping.products;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.cloud.stream.binder.test.InputDestination;
-import org.springframework.cloud.stream.binder.test.OutputDestination;
-import org.springframework.cloud.stream.binder.test.TestChannelBinderConfiguration;
-import org.springframework.context.annotation.Import;
-import org.springframework.integration.support.MessageBuilder;
-import org.springframework.messaging.Message;
-import org.springframework.test.context.TestPropertySource;
-import xyz.softeng.shopping.common.StreamTestUtils;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.RabbitMQContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-@Import(TestChannelBinderConfiguration.class)
-@TestPropertySource(properties = {
-        "spring.cloud.stream.bindings.purchases-in-0.destination=test-buys-topic",
-        "spring.cloud.stream.bindings.products-out-0.destination=test-products-topic"
-})
+@Testcontainers
 class ApplicationTest {
-    @Autowired
-    private InputDestination inputDestination;
+    @Container
+    public static RabbitMQContainer rabbit = new RabbitMQContainer("rabbitmq:3.8-management");
 
     @Autowired
-    private OutputDestination outputDestination;
+    private RabbitTemplate rabbitTemplate;
 
-    @Autowired
-    private ProductRepository productRepository;
-
-    @AfterEach
-    public void teardown() {
-        productRepository.deleteAll();
+    @DynamicPropertySource
+    static void rabbitmqProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.rabbitmq.host", rabbit::getHost);
+        registry.add("spring.rabbitmq.port", rabbit::getAmqpPort);
     }
 
     @Test
-    void testProductEventIsRaisedAfterSave() {
-        productRepository.save(new Product("test-pc", 1000));
-
-        var message = outputDestination.receive(0, "test-products-topic");
-        Product event = StreamTestUtils.convert(message, Product.class);
-        assertThat(event).isNotNull();
-        assertThat(event.getName()).isEqualTo("test-pc");
-        assertThat(event.getPrice()).isEqualTo(1000);
-    }
-
-    @Test
-    void testBuyEventIsProcessed() {
-        Product product = productRepository.save(new Product("test-pc", 1000));
-        Message<BuyEvent> message = MessageBuilder.withPayload(new BuyEvent(product.getId())).build();
-
-        inputDestination.send(message, "test-buys-topic");
-
-        product = productRepository.findById(product.getId()).orElseThrow();
-        assertThat(product.getBuyCount()).isOne();
+    void simple() {
+        assertThat(rabbitTemplate).isNotNull();
+        Product product = new Product();
+        rabbitTemplate.convertAndSend(product);
     }
 }

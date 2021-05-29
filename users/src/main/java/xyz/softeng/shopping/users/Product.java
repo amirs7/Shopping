@@ -1,4 +1,4 @@
-package xyz.softeng.shopping.products;
+package xyz.softeng.shopping.users;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BuyEvent {
-    private Long productId;
+public class Product {
+    private Long id;
+    private String name;
 }

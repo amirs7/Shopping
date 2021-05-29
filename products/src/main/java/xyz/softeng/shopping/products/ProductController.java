@@ -1,7 +1,10 @@
 package xyz.softeng.shopping.products;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
@@ -14,13 +17,6 @@ public class ProductController {
     @PostMapping
     public Product create(@RequestBody ProductDto dto) {
         Product product = mapper.fromDto(dto);
-        return repository.save(product);
-    }
-
-    @PutMapping("/{id}")
-    public Product update(@PathVariable Long id, @RequestBody ProductDto dto) {
-        Product product = repository.findById(id).orElseThrow();
-        product = mapper.update(product, dto);
         return repository.save(product);
     }
 }

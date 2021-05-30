@@ -1,7 +1,6 @@
 package xyz.softeng.shopping.users;
 
 
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -25,7 +24,6 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.await;
 import static org.hamcrest.Matchers.equalTo;
 
-@Slf4j
 @SpringBootTest
 @Testcontainers
 @ActiveProfiles("test")

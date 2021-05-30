@@ -10,6 +10,10 @@ import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.RabbitMQContainer;
+import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import xyz.softeng.shopping.common.NewUserEvent;
 import xyz.softeng.shopping.users.domain.User;
@@ -23,16 +27,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 class UserUpdateListenerIntegrationTest {
     static final String USERS_EXCHANGE = "test-users-exchange";
 
-//    @Container
-//    static final RabbitMQContainer rabbit = new RabbitMQContainer("rabbitmq:3.8-management")
-//            .withExchange(USERS_EXCHANGE, "fanout");
+    @Container
+    static final RabbitMQContainer rabbit = new RabbitMQContainer("rabbitmq:3.8-management")
+            .withExchange(USERS_EXCHANGE, "fanout");
 
-//    @DynamicPropertySource
-//    static void rabbitmqProperties(DynamicPropertyRegistry registry) {
-//        registry.add("spring.rabbitmq.host", rabbit::getHost);
-//        registry.add("spring.rabbitmq.port", rabbit::getAmqpPort);
-//        registry.add("shopping.rabbit.exchange.purchases", () -> USERS_EXCHANGE);
-//    }
+    @DynamicPropertySource
+    static void rabbitmqProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.rabbitmq.host", rabbit::getHost);
+        registry.add("spring.rabbitmq.port", rabbit::getAmqpPort);
+        registry.add("shopping.rabbit.exchange.purchases", () -> USERS_EXCHANGE);
+    }
 
     @Autowired
     ConnectionFactory connectionFactory;
@@ -60,7 +64,7 @@ class UserUpdateListenerIntegrationTest {
     }
 
     @Test
-    void testUserEventIsSent() throws InterruptedException {
+    void testUserEventIsSent() {
         User user = new User("test", 1000);
         userRepository.save(user);
         NewUserEvent event = (NewUserEvent) rabbitTemplate.receiveAndConvert(usersQueue.getName(), 5_000);

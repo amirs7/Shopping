@@ -6,7 +6,7 @@ import xyz.softeng.shopping.users.domain.User;
 import xyz.softeng.shopping.users.domain.UserRepository;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping
 @RequiredArgsConstructor
 public class UserController {
     private final UserRepository repository;

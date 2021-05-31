@@ -60,7 +60,7 @@ class PurchaseEventHandlerIntegrationTest {
     @Test
     void testConfiguration() {
         User user = userRepository.save(new User("test", 1000));
-        PurchaseEvent event = new PurchaseEvent(user.getId(), 400);
+        PurchaseEvent event = new PurchaseEvent(user.getId(), null, 400);
         rabbitTemplate.convertAndSend(event);
         await().atMost(5, SECONDS).until(wealthExtractor(user.getId()), equalTo(400));
     }

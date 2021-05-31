@@ -10,8 +10,8 @@ import xyz.softeng.shopping.products.domain.ProductRepository;
 
 
 @RestController
+@RequestMapping
 @RequiredArgsConstructor
-@RequestMapping("/products")
 public class ProductController {
     private final ProductRepository repository;
     private final ProductMapper mapper;

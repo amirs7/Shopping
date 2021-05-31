@@ -12,13 +12,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitConfiguration {
-    @Value("${shopping.rabbit.exchange.products}")
-    private String productsExchange;
 
     @Bean
-    public FanoutExchange exchange() {
-        return ExchangeBuilder.fanoutExchange(productsExchange)
-                .build();
+    public FanoutExchange exchange(@Value("${shopping.rabbit.exchange.products}") String name) {
+        return ExchangeBuilder.fanoutExchange(name).build();
     }
 
     @Bean
@@ -27,9 +24,9 @@ public class RabbitConfiguration {
     }
 
     @Bean
-    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory, FanoutExchange exchange) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setExchange(productsExchange);
+        rabbitTemplate.setExchange(exchange.getName());
         rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
         return rabbitTemplate;
     }

@@ -9,5 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PurchaseEvent implements DomainEvent {
     private Long userId;
+    private Long productId;
     private Integer cost;
 }

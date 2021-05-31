@@ -1,4 +1,4 @@
-package xyz.softeng.shopping.authserver;
+package xyz.softeng.shopping.authserver.user;
 
 import lombok.Data;
 

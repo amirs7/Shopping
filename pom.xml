@@ -15,7 +15,6 @@
         <module>common</module>
         <module>config-server</module>
         <module>gateway</module>
-        <module>auth</module>
         <module>auth-server</module>
         <module>resource</module>
     </modules>

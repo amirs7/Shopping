@@ -1,4 +1,4 @@
-package xyz.softeng.shopping.authserver;
+package xyz.softeng.shopping.authserver.user;
 
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;

@@ -19,9 +19,9 @@ public class RabbitConfiguration {
     }
 
     @Bean
-    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory, MessageConverter messageConverter, FanoutExchange usersExchange) {
+    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory, MessageConverter messageConverter, FanoutExchange userExchange) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setExchange(usersExchange.getName());
+        rabbitTemplate.setExchange(userExchange.getName());
         rabbitTemplate.setMessageConverter(messageConverter);
         return rabbitTemplate;
     }

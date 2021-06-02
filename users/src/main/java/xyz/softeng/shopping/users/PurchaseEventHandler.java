@@ -27,12 +27,12 @@ public class PurchaseEventHandler {
 
     @Bean
     public Queue purchaseQueue(UserServiceProperties properties) {
-        return QueueBuilder.durable(properties.getPurchaseQueue()).build();
+        return QueueBuilder.durable(properties.getPurchaseExchange()).build();
     }
 
     @Bean
     public FanoutExchange purchaseExchange(UserServiceProperties properties) {
-        return ExchangeBuilder.fanoutExchange(properties.getPurchaseExchange())
+        return ExchangeBuilder.fanoutExchange(properties.getPurchaseQueue())
                 .suppressDeclaration()
                 .build();
     }

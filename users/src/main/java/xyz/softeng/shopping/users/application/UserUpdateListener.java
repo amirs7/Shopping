@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import xyz.softeng.shopping.common.UserEvent;
+import xyz.softeng.shopping.common.events.user.UserEvent;
 import xyz.softeng.shopping.users.domain.User;
 
 import javax.persistence.PostPersist;

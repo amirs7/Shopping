@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 import xyz.softeng.shopping.authserver.user.User;
 import xyz.softeng.shopping.authserver.user.UserMapper;
 import xyz.softeng.shopping.authserver.user.UserRepository;
-import xyz.softeng.shopping.common.UserCreatedEvent;
-import xyz.softeng.shopping.common.UserDeletedEvent;
+import xyz.softeng.shopping.common.events.user.UserCreatedEvent;
+import xyz.softeng.shopping.common.events.user.UserDeletedEvent;
 
 import javax.transaction.Transactional;
 

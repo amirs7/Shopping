@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
-import xyz.softeng.shopping.common.PurchaseEvent;
+import xyz.softeng.shopping.common.events.PurchaseEvent;
 import xyz.softeng.shopping.users.domain.UserRepository;
 
 @Slf4j

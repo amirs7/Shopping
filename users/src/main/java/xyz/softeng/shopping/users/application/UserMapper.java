@@ -2,9 +2,8 @@ package xyz.softeng.shopping.users.application;
 
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
-import xyz.softeng.shopping.common.UserCreatedEvent;
-import xyz.softeng.shopping.common.UserDeletedEvent;
-import xyz.softeng.shopping.common.UserEvent;
+import xyz.softeng.shopping.common.events.user.UserCreatedEvent;
+import xyz.softeng.shopping.common.events.user.UserDeletedEvent;
 import xyz.softeng.shopping.users.domain.User;
 
 @Mapper

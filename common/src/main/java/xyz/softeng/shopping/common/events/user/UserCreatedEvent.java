@@ -1,6 +1,7 @@
-package xyz.softeng.shopping.common;
+package xyz.softeng.shopping.common.events.user;
 
 import lombok.Data;
+import xyz.softeng.shopping.common.UserRole;
 
 @Data
 public class UserCreatedEvent extends UserEvent {

@@ -2,7 +2,7 @@ package xyz.softeng.shopping.products.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import xyz.softeng.shopping.products.application.ProductUpdateListener;
+import xyz.softeng.shopping.products.application.ProductEntityListener;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -12,7 +12,7 @@ import javax.persistence.Id;
 @Data
 @Entity
 @NoArgsConstructor
-@EntityListeners(ProductUpdateListener.class)
+@EntityListeners(ProductEntityListener.class)
 public class Product {
     @Id
     @GeneratedValue

@@ -1,4 +1,4 @@
-package xyz.softeng.shopping.common;
+package xyz.softeng.shopping.common.events.user;
 
 import lombok.Data;
 

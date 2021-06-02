@@ -15,7 +15,7 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.RabbitMQContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import xyz.softeng.shopping.common.NewProductEvent;
+import xyz.softeng.shopping.common.events.product.ProductCreatedEvent;
 import xyz.softeng.shopping.products.domain.Product;
 import xyz.softeng.shopping.products.domain.ProductRepository;
 
@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @Testcontainers
 @ActiveProfiles("test")
-class ProductUpdateListenerTest {
+class ProductEntityListenerTest {
 
     static final String PRODUCTS_EXCHANGE = "test-products-exchange";
 
@@ -68,7 +68,7 @@ class ProductUpdateListenerTest {
     void testUserEventIsSent() {
         Product product = new Product("pc", 1000);
         productRepository.save(product);
-        NewProductEvent event = (NewProductEvent) rabbitTemplate.receiveAndConvert(productsQueue.getName(), 5_000);
+        ProductCreatedEvent event = (ProductCreatedEvent) rabbitTemplate.receiveAndConvert(productsQueue.getName(), 5_000);
         assertThat(event).usingRecursiveComparison().isEqualTo(product);
     }
 }

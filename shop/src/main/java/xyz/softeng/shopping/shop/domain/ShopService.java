@@ -3,7 +3,7 @@ package xyz.softeng.shopping.shop.domain;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
-import xyz.softeng.shopping.common.PurchaseEvent;
+import xyz.softeng.shopping.common.events.PurchaseEvent;
 
 @Component
 @RequiredArgsConstructor

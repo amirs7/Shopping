@@ -5,7 +5,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import xyz.softeng.shopping.common.UserCreatedEvent;
+import xyz.softeng.shopping.common.events.user.UserCreatedEvent;
 
 @Mapper
 public abstract class UserMapper {

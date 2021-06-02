@@ -30,11 +30,6 @@ public class RabbitConfiguration {
     }
 
     @Bean
-    public FanoutExchange usersExchange() {
-        return ExchangeBuilder.fanoutExchange(usersExchange).build();
-    }
-
-    @Bean
     public Binding purchasesBinding(Queue queue) {
         return BindingBuilder.bind(queue).to(purchasesExchange());
     }

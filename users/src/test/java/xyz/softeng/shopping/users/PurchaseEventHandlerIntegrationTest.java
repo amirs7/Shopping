@@ -15,8 +15,8 @@ import org.testcontainers.containers.RabbitMQContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import xyz.softeng.shopping.common.events.PurchaseEvent;
-import xyz.softeng.shopping.users.domain.User;
-import xyz.softeng.shopping.users.domain.UserRepository;
+import xyz.softeng.shopping.users.user.User;
+import xyz.softeng.shopping.users.user.UserRepository;
 
 import java.util.concurrent.Callable;
 

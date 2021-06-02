@@ -13,8 +13,8 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.RabbitMQContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import xyz.softeng.shopping.shop.domain.Product;
-import xyz.softeng.shopping.shop.domain.ProductRepository;
+import xyz.softeng.shopping.shop.product.Product;
+import xyz.softeng.shopping.shop.product.ProductRepository;
 
 import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.verify;

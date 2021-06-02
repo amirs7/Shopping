@@ -8,7 +8,6 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "auth_user")
-@EntityListeners(UserEntityListener.class)
 public class User {
     @Id
     @GeneratedValue

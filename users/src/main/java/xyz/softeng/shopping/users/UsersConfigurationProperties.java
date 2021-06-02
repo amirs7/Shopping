@@ -12,4 +12,8 @@ import javax.validation.constraints.NotEmpty;
 public class UsersConfigurationProperties {
     @NotEmpty
     private String purchasesQueue;
+    @NotEmpty
+    private String adminUser;
+    @NotEmpty
+    private String adminPass;
 }

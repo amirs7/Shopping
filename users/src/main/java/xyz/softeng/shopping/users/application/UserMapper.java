@@ -2,7 +2,9 @@ package xyz.softeng.shopping.users.application;
 
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
-import xyz.softeng.shopping.common.NewUserEvent;
+import xyz.softeng.shopping.common.UserCreatedEvent;
+import xyz.softeng.shopping.common.UserDeletedEvent;
+import xyz.softeng.shopping.common.UserEvent;
 import xyz.softeng.shopping.users.domain.User;
 
 @Mapper
@@ -10,5 +12,7 @@ import xyz.softeng.shopping.users.domain.User;
 public interface UserMapper {
     User fromDto(UserDto dto);
 
-    NewUserEvent toEvent(User user);
+    UserCreatedEvent toCreateEvent(User user);
+
+    UserDeletedEvent toDeleteEvent(User user);
 }

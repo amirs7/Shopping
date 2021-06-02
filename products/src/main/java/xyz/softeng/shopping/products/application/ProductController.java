@@ -1,10 +1,8 @@
 package xyz.softeng.shopping.products.application;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 import xyz.softeng.shopping.products.domain.Product;
 import xyz.softeng.shopping.products.domain.ProductRepository;
 
@@ -17,8 +15,15 @@ public class ProductController {
     private final ProductMapper mapper;
 
     @PostMapping
+    @PreAuthorize("hasAuthority('SCOPE_VENDOR')")
     public Product create(@RequestBody ProductDto dto) {
         Product product = mapper.fromDto(dto);
         return repository.save(product);
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("@webSecurity.owns(principal.username, #id)")
+    public void delete(@PathVariable Long id) {
+        repository.deleteById(id);
     }
 }

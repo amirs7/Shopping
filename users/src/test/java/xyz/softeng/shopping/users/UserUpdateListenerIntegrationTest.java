@@ -15,7 +15,7 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.RabbitMQContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import xyz.softeng.shopping.common.NewUserEvent;
+import xyz.softeng.shopping.common.UserEvent;
 import xyz.softeng.shopping.users.domain.User;
 import xyz.softeng.shopping.users.domain.UserRepository;
 
@@ -67,7 +67,7 @@ class UserUpdateListenerIntegrationTest {
     void testUserEventIsSent() {
         User user = new User("test", 1000);
         userRepository.save(user);
-        NewUserEvent event = (NewUserEvent) rabbitTemplate.receiveAndConvert(usersQueue.getName(), 5_000);
+        UserEvent event = (UserEvent) rabbitTemplate.receiveAndConvert(usersQueue.getName(), 5_000);
         assertThat(event).usingRecursiveComparison().isEqualTo(user);
     }
 }

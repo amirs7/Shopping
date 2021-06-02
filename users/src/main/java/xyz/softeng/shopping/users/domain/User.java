@@ -3,6 +3,7 @@ package xyz.softeng.shopping.users.domain;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
+import xyz.softeng.shopping.common.UserRole;
 import xyz.softeng.shopping.users.application.UserUpdateListener;
 
 import javax.persistence.*;
@@ -22,9 +23,14 @@ public class User {
 
     private Integer wealth;
 
+    private UserRole role;
+
+    private String password;
+
     public User(String username, Integer wealth) {
         this.username = username;
         this.wealth = wealth;
+        this.role = UserRole.CUSTOMER;
     }
 
     public void decreaseWealth(int amount) {

@@ -22,6 +22,8 @@ public class Product {
 
     private Integer price;
 
+    private String vendorUsername;
+
     public Product(String name, Integer price) {
         this.name = name;
         this.price = price;

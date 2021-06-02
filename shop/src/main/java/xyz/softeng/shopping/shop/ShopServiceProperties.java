@@ -1,4 +1,4 @@
-package xyz.softeng.shopping.authserver;
+package xyz.softeng.shopping.shop;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -6,20 +6,23 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotEmpty;
 
+
 @Data
 @Validated
-@ConfigurationProperties("auth-server")
-public class AuthServerProperties {
-    private String keyId = "auth-server-key";
+@ConfigurationProperties("shop-service")
+public class ShopServiceProperties {
+    @NotEmpty
+    private String purchaseExchange;
 
     @NotEmpty
-    private String issuer;
-
-    private Integer expire = 120_000;
+    private String productExchange;
 
     @NotEmpty
-    private String userQueue;
+    private String productQueue;
 
     @NotEmpty
     private String userExchange;
+
+    @NotEmpty
+    private String userQueue;
 }

@@ -14,7 +14,7 @@ import xyz.softeng.shopping.common.configuration.RabbitBaseConfiguration;
 @Import(RabbitBaseConfiguration.class)
 public class RabbitConfiguration {
     @Bean
-    FanoutExchange usersExchange(UserServiceConfigurationProperties properties) {
+    FanoutExchange usersExchange(UserServiceProperties properties) {
         return ExchangeBuilder.fanoutExchange(properties.getUsersExchange()).build();
     }
 

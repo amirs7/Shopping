@@ -16,8 +16,8 @@ import org.testcontainers.containers.RabbitMQContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import xyz.softeng.shopping.common.events.product.ProductCreatedEvent;
-import xyz.softeng.shopping.products.domain.Product;
-import xyz.softeng.shopping.products.domain.ProductRepository;
+import xyz.softeng.shopping.products.product.Product;
+import xyz.softeng.shopping.products.product.ProductRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

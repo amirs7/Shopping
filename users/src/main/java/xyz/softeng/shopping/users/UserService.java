@@ -9,8 +9,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 @SpringBootApplication
 @ConfigurationPropertiesScan
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class UsersApplication {
+public class UserService {
     public static void main(String[] args) {
-        SpringApplication.run(UsersApplication.class, args);
+        SpringApplication.run(UserService.class, args);
     }
 }

@@ -4,16 +4,13 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.NotEmpty;
-
 @Data
 @Validated
-@ConfigurationProperties("shopping.users")
-public class UsersConfigurationProperties {
-    @NotEmpty
-    private String purchasesQueue;
-    @NotEmpty
+@ConfigurationProperties("user-service")
+public class UserServiceConfigurationProperties {
     private String adminUser;
-    @NotEmpty
     private String adminPass;
+    private String usersExchange;
+    private String purchasesQueue;
+    private String purchasesExchange;
 }

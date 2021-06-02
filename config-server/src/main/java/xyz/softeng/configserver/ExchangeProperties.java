@@ -10,5 +10,7 @@ import static lombok.AccessLevel.PUBLIC;
 @AllArgsConstructor
 @FieldDefaults(makeFinal = true, level = PUBLIC)
 public class ExchangeProperties {
-    String products;
+    private String products;
+    private String users;
+    private String purchases;
 }

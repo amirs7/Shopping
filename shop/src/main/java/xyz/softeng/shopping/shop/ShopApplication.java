@@ -16,9 +16,9 @@ import java.util.function.Consumer;
 @Slf4j
 @SpringBootApplication
 @ConfigurationPropertiesScan
-public class Application {
+public class ShopApplication {
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(ShopApplication.class, args);
     }
 
     @Bean

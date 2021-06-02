@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Table(name = "shop_user")
 public class User {
     @Id
-    private Long id;
+    private String username;
 
     private Integer wealth;
 

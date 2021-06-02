@@ -16,7 +16,7 @@ import javax.transaction.Transactional;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-@RabbitListener(queues = "${auth-server.users-queue}")
+@RabbitListener(queues = "${auth-server.user-queue}")
 public class UserEventHandler {
     private final UserRepository repository;
     private final UserMapper mapper;

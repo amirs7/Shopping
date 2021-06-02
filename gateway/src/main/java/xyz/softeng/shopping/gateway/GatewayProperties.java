@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Data
-@ConfigurationProperties("shopping.gateway")
+@ConfigurationProperties("eshop.gateway")
 public class GatewayProperties {
     private Map<String, String> services = new HashMap<>();
 }

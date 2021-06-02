@@ -16,6 +16,8 @@
         <module>config-server</module>
         <module>gateway</module>
         <module>auth-server</module>
+        <module>rating</module>
+        <module>history</module>
     </modules>
 
     <properties>

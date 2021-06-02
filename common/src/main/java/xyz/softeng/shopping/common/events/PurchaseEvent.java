@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PurchaseEvent implements DomainEvent {
-    private Long userId;
+    private String username;
     private Long productId;
     private Integer cost;
 }

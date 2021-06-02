@@ -1,21 +1,29 @@
 package xyz.softeng.shopping.authserver.user;
 
 import lombok.Data;
+import org.hibernate.annotations.NaturalId;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @Entity
 @Table(name = "auth_user")
+@EntityListeners(UserEntityListener.class)
 public class User {
     @Id
     @GeneratedValue
     private Long id;
 
+    @NaturalId
     private String username;
 
     private String password;
+
+    private Role role;
+
+    public enum Role {
+        ADMIN,
+        VENDOR,
+        CUSTOMER
+    }
 }

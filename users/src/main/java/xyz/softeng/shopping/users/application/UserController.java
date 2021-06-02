@@ -19,7 +19,8 @@ public class UserController {
     }
 
     @GetMapping
-    public String test() {
-        return "users";
+    @RequestMapping("/bar/baz")
+    public String test(@RequestParam String me) {
+        return me;
     }
 }

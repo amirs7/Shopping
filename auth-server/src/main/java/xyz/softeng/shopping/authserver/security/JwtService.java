@@ -10,6 +10,7 @@ import com.nimbusds.jwt.SignedJWT;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import xyz.softeng.shopping.authserver.AuthServerProperties;
+import xyz.softeng.shopping.authserver.user.User;
 
 import java.security.KeyPair;
 import java.time.Instant;
@@ -22,14 +23,15 @@ public class JwtService {
     private final JWSAlgorithm algorithm;
     private final AuthServerProperties properties;
 
-    public String encode(String username) throws JOSEException {
+    public String encode(User user) throws JOSEException {
         JWSHeader header = new JWSHeader.Builder(algorithm)
                 .type(JOSEObjectType.JWT)
                 .keyID(properties.getKeyId())
                 .build();
         JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
+                .subject(user.getUsername())
                 .issuer(properties.getIssuer())
-                .subject(username)
+                .claim("scope", user.getRole())
                 .expirationTime(Date.from(Instant.now().plusSeconds(properties.getExpire())))
                 .build();
         SignedJWT jwt = new SignedJWT(header, claimsSet);

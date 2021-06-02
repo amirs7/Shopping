@@ -7,10 +7,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/resource")
+@PreAuthorize("hasAuthority('SCOPE_ADMIN')")
 public class ResourceController {
-    @GetMapping("/test")
-    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/customer")
+    @PreAuthorize("hasAuthority('SCOPE_CUSTOMER')")
+    public String customer() {
+        return "customer";
+    }
+
+    @GetMapping("/vendor")
+    @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN')")
+    public String vendor() {
+        return "vendor";
+    }
+
+    @GetMapping("/admin")
     public String test() {
-        return "Hello";
+        return "admin";
     }
 }

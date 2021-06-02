@@ -3,12 +3,14 @@ package xyz.softeng.shopping.authserver.user;
 import lombok.Data;
 import org.hibernate.annotations.NaturalId;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Data
 @Entity
 @Table(name = "auth_user")
-@EntityListeners(UserEntityListener.class)
 public class User {
     @Id
     @GeneratedValue

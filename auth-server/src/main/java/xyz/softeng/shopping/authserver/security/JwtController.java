@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import xyz.softeng.shopping.authserver.user.User;
-import xyz.softeng.shopping.authserver.user.UserDto;
+import xyz.softeng.shopping.authserver.user.UserCredentials;
 import xyz.softeng.shopping.authserver.user.UserRepository;
 
 import java.util.Map;
@@ -30,7 +30,7 @@ public class JwtController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody UserDto credentials) throws JOSEException {
+    public String login(@RequestBody UserCredentials credentials) throws JOSEException {
         User user = userRepository.findByUsername(credentials.getUsername())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
         if (!passwordEncoder.matches(credentials.getPassword(), user.getPassword()))

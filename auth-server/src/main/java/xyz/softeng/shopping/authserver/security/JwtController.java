@@ -33,8 +33,8 @@ public class JwtController {
     public String login(@RequestBody UserDto credentials) throws JOSEException {
         User user = userRepository.findByUsername(credentials.getUsername())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
-        if (passwordEncoder.matches(user.getPassword(), credentials.getPassword()))
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        return jwtService.encode(user.getUsername());
+        if (!passwordEncoder.matches(credentials.getPassword(), user.getPassword()))
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        return jwtService.encode(user);
     }
 }

@@ -14,8 +14,7 @@ import static lombok.AccessLevel.PUBLIC;
 @ConstructorBinding
 @FieldDefaults(makeFinal = true, level = PUBLIC)
 public class ServiceProperties {
-    @NotNull
-    @Min(8000)
-    @Max(9000)
     Integer port;
+
+    String host;
 }

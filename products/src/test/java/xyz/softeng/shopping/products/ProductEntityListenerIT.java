@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @Testcontainers
 @ActiveProfiles("test")
-class ProductEntityListenerTest {
+class ProductEntityListenerIT {
 
     static final String PRODUCTS_EXCHANGE = "test-products-exchange";
 

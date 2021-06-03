@@ -27,7 +27,7 @@ import static org.hamcrest.Matchers.equalTo;
 @SpringBootTest
 @Testcontainers
 @ActiveProfiles("test")
-class PurchaseEventHandlerIntegrationTest {
+class PurchaseEventHandlerIT {
     private static final String PURCHASE_EXCHANGE = "test-purchases-exchange";
 
     @Container

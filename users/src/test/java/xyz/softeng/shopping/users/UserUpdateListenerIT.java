@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @Testcontainers
 @ActiveProfiles("test")
-class UserUpdateListenerIntegrationTest {
+class UserUpdateListenerIT {
     static final String USER_EXCHANGE = "test-user-exchange";
 
     @Container

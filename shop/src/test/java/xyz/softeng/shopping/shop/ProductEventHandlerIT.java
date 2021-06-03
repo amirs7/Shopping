@@ -13,26 +13,27 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.RabbitMQContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import xyz.softeng.shopping.shop.user.User;
-import xyz.softeng.shopping.shop.user.UserRepository;
+import xyz.softeng.shopping.shop.product.Product;
+import xyz.softeng.shopping.shop.product.ProductRepository;
 
 import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
 @Testcontainers
-class UserEventHandlerTest {
-    private static final String USERS_EXCHANGE = "test-users-exchange";
+class ProductEventHandlerIT {
+    private static final String PRODUCTS_EXCHANGE = "test-products-exchange";
 
     @Container
     public static RabbitMQContainer rabbit = new RabbitMQContainer("rabbitmq:3.8-management")
-            .withExchange(USERS_EXCHANGE, "fanout");
+            .withExchange(PRODUCTS_EXCHANGE, "fanout");
+
 
     @Autowired
     private ConnectionFactory connectionFactory;
 
     @MockBean
-    private UserRepository userRepository;
+    private ProductRepository productRepository;
 
     private RabbitTemplate rabbitTemplate;
 
@@ -40,7 +41,7 @@ class UserEventHandlerTest {
     static void rabbitmqProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.rabbitmq.host", rabbit::getHost);
         registry.add("spring.rabbitmq.port", rabbit::getAmqpPort);
-        registry.add("shopping.rabbit.exchange.users", () -> USERS_EXCHANGE);
+        registry.add("shopping.rabbit.exchange.products", () -> PRODUCTS_EXCHANGE);
     }
 
     @BeforeEach
@@ -48,13 +49,13 @@ class UserEventHandlerTest {
         rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.stop();
         rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
-        rabbitTemplate.setExchange(USERS_EXCHANGE);
+        rabbitTemplate.setExchange(PRODUCTS_EXCHANGE);
     }
 
     @Test
     void simple() {
-        User user = new User();
-        rabbitTemplate.convertAndSend(user);
-        verify(userRepository, timeout(5_000)).save(user);
+        Product product = new Product();
+        rabbitTemplate.convertAndSend(product);
+        verify(productRepository, timeout(5_000)).save(product);
     }
 }

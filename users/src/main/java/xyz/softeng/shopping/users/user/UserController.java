@@ -27,7 +27,7 @@ public class UserController {
 
     @Transactional
     @DeleteMapping("/{username}")
-    public void create(@PathVariable String username) {
+    public void delete(@PathVariable String username) {
         repository.deleteByUsername(username);
     }
 }

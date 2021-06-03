@@ -28,11 +28,11 @@ import static org.hamcrest.Matchers.equalTo;
 @Testcontainers
 @ActiveProfiles("test")
 class PurchaseEventHandlerIntegrationTest {
-    private static final String PURCHASES_EXCHANGE = "test-purchases-exchange";
+    private static final String PURCHASE_EXCHANGE = "test-purchases-exchange";
 
     @Container
     public static final RabbitMQContainer rabbit = new RabbitMQContainer("rabbitmq:3.8-management")
-            .withExchange(PURCHASES_EXCHANGE, "fanout");
+            .withExchange(PURCHASE_EXCHANGE, "fanout");
 
     @Autowired
     private ConnectionFactory connectionFactory;
@@ -47,14 +47,14 @@ class PurchaseEventHandlerIntegrationTest {
     static void rabbitmqProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.rabbitmq.host", rabbit::getHost);
         registry.add("spring.rabbitmq.port", rabbit::getAmqpPort);
-        registry.add("shopping.rabbit.exchange.purchases", () -> PURCHASES_EXCHANGE);
+        registry.add("eshop.exchange.purchase", () -> PURCHASE_EXCHANGE);
     }
 
     @BeforeEach
     public void setup() {
         rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
-        rabbitTemplate.setExchange(PURCHASES_EXCHANGE);
+        rabbitTemplate.setExchange(PURCHASE_EXCHANGE);
     }
 
     @Test
@@ -62,7 +62,7 @@ class PurchaseEventHandlerIntegrationTest {
         User user = userRepository.save(new User("test", 1000));
         PurchaseEvent event = new PurchaseEvent(user.getUsername(), null, 400);
         rabbitTemplate.convertAndSend(event);
-        await().atMost(5, SECONDS).until(wealthExtractor(user.getId()), equalTo(400));
+        await().atMost(5, SECONDS).until(wealthExtractor(user.getId()), equalTo(500));
     }
 
     private Callable<Integer> wealthExtractor(long id) {

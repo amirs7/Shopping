@@ -15,7 +15,7 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.RabbitMQContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import xyz.softeng.shopping.common.events.user.UserEvent;
+import xyz.softeng.shopping.common.events.user.UserCreatedEvent;
 import xyz.softeng.shopping.users.user.User;
 import xyz.softeng.shopping.users.user.UserRepository;
 
@@ -25,17 +25,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Testcontainers
 @ActiveProfiles("test")
 class UserUpdateListenerIntegrationTest {
-    static final String USERS_EXCHANGE = "test-users-exchange";
+    static final String USER_EXCHANGE = "test-user-exchange";
 
     @Container
-    static final RabbitMQContainer rabbit = new RabbitMQContainer("rabbitmq:3.8-management")
-            .withExchange(USERS_EXCHANGE, "fanout");
+    static final RabbitMQContainer rabbit = new RabbitMQContainer("rabbitmq:3.8-management");
 
     @DynamicPropertySource
     static void rabbitmqProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.rabbitmq.host", rabbit::getHost);
         registry.add("spring.rabbitmq.port", rabbit::getAmqpPort);
-        registry.add("shopping.rabbit.exchange.purchases", () -> USERS_EXCHANGE);
+        registry.add("eshop.exchange.user", () -> USER_EXCHANGE);
     }
 
     @Autowired
@@ -55,8 +54,8 @@ class UserUpdateListenerIntegrationTest {
     void setup() {
         rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
-        rabbitTemplate.setExchange(USERS_EXCHANGE);
-        FanoutExchange usersExchange = ExchangeBuilder.fanoutExchange(USERS_EXCHANGE).suppressDeclaration().build();
+        rabbitTemplate.setExchange(USER_EXCHANGE);
+        FanoutExchange usersExchange = ExchangeBuilder.fanoutExchange(USER_EXCHANGE).suppressDeclaration().build();
         usersQueue = QueueBuilder.nonDurable().build();
         rabbitAdmin.declareQueue(usersQueue);
         Binding usersQueueBinding = BindingBuilder.bind(usersQueue).to(usersExchange);
@@ -67,7 +66,7 @@ class UserUpdateListenerIntegrationTest {
     void testUserEventIsSent() {
         User user = new User("test", 1000);
         userRepository.save(user);
-        UserEvent event = (UserEvent) rabbitTemplate.receiveAndConvert(usersQueue.getName(), 5_000);
+        UserCreatedEvent event = (UserCreatedEvent) rabbitTemplate.receiveAndConvert(usersQueue.getName(), 5_000);
         assertThat(event).usingRecursiveComparison().isEqualTo(user);
     }
 }

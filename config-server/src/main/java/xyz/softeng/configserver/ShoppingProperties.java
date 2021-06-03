@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import java.util.Map;
 
 import static lombok.AccessLevel.PUBLIC;
 
@@ -22,4 +23,6 @@ public class ShoppingProperties {
 
     @NotEmpty
     String authServerUri;
+
+    Map<String, ServiceProperties> services;
 }

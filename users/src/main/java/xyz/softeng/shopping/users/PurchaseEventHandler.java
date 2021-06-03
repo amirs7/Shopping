@@ -15,10 +15,10 @@ import xyz.softeng.shopping.users.user.UserRepository;
 public class PurchaseEventHandler {
     private final UserRepository userRepository;
 
-    @RabbitListener(queues = "${user-service.purchases-queue}")
+    @RabbitListener(queues = "${user-service.purchase-queue}")
     public void updateUserWealth(PurchaseEvent event) {
         log.info("Handling purchase event: {}", event);
-        userRepository.findById(event.getUserId())
+        userRepository.findByUsername(event.getUsername())
                 .ifPresent(user -> {
                     user.decreaseWealth(event.getCost());
                     userRepository.save(user);
@@ -26,15 +26,14 @@ public class PurchaseEventHandler {
     }
 
     @Bean
-    public Queue purchaseQueue(UserServiceProperties properties) {
-        return QueueBuilder.durable(properties.getPurchaseExchange()).build();
+    public FanoutExchange purchaseExchange(UserServiceProperties properties) {
+        return ExchangeBuilder.fanoutExchange(properties.getPurchaseExchange())
+                .build();
     }
 
     @Bean
-    public FanoutExchange purchaseExchange(UserServiceProperties properties) {
-        return ExchangeBuilder.fanoutExchange(properties.getPurchaseQueue())
-                .suppressDeclaration()
-                .build();
+    public Queue purchaseQueue(UserServiceProperties properties) {
+        return QueueBuilder.durable(properties.getPurchaseQueue()).build();
     }
 
     @Bean

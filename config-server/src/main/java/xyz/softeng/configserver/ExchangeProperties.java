@@ -6,11 +6,11 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 
 import static lombok.AccessLevel.PUBLIC;
 
-@ConstructorBinding
 @AllArgsConstructor
+@ConstructorBinding
 @FieldDefaults(makeFinal = true, level = PUBLIC)
 public class ExchangeProperties {
-    private String products;
-    private String users;
-    private String purchases;
+    String products;
+    String users;
+    String purchases;
 }

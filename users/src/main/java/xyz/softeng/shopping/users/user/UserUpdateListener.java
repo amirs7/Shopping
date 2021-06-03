@@ -9,6 +9,7 @@ import xyz.softeng.shopping.common.events.user.UserEvent;
 
 import javax.persistence.PostPersist;
 import javax.persistence.PostRemove;
+import javax.persistence.PostUpdate;
 
 @Slf4j
 @Component
@@ -21,6 +22,7 @@ public class UserUpdateListener {
     private UserMapper mapper;
 
     @PostPersist
+    @PostUpdate
     public void onUserCreated(User user) {
         UserEvent event = mapper.toCreateEvent(user);
         rabbitTemplate.convertAndSend(event);

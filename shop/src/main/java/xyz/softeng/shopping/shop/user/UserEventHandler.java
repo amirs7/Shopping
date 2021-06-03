@@ -6,18 +6,28 @@ import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import xyz.softeng.shopping.common.events.user.UserCreatedEvent;
+import xyz.softeng.shopping.common.events.user.UserDeletedEvent;
 import xyz.softeng.shopping.shop.ShopServiceProperties;
 
 @Slf4j
 @Configuration
 @RequiredArgsConstructor
 public class UserEventHandler {
-    private final UserRepository userRepository;
+    private final UserRepository repository;
+    private final UserMapper mapper;
 
     @RabbitListener(queues = "${shop-service.user-queue}")
-    public void saveNewUser(User user) {
-        log.info("Saving new user: {}", user);
-        userRepository.save(user);
+    public void saveUser(UserCreatedEvent event) {
+        log.info("Saving new user: {}", event);
+        User user = mapper.fromEvent(event);
+        repository.save(user);
+    }
+
+    @RabbitListener(queues = "${shop-service.user-queue}")
+    public void deleteUser(UserDeletedEvent event) {
+        log.info("Deleting user: {}", event);
+        repository.deleteById(event.getUsername());
     }
 
     @Bean

@@ -31,7 +31,7 @@ services:
 
 
 package-config-server:
-  extends: .package-base
+  extends: .package
   variables:
     MODULE_NAME: config-server
 

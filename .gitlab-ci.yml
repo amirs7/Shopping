@@ -11,22 +11,16 @@ variables:
 services:
   - docker:20.10.7-dind
 
-compile:
+.package:
   image: maven:3.6-openjdk-15-slim
   stage: build
   script:
-    - mvn compile
-
-package:
-  image: maven:3.6-openjdk-15-slim
-  stage: build
-  script:
-    - mvn package -am -pl config-server
+    - mvn package -am -pl $MODULE_NAME
   artifacts:
     paths:
-      - ./config-server/target/*.jar
+      - ./$MODULE_NAME/target/*.jar
 
-build-image:
+.build-image:
   stage: build-image
   script:
     - cd config-server
@@ -34,5 +28,15 @@ build-image:
     - docker pull $LATEST_IMAGE || true
     - docker build --cache-from $LATEST_IMAGE -t $LATEST_IMAGE .
     - docker push $LATEST_IMAGE
+
+
+package-config-server:
+  extends: .package-base
   variables:
+    MODULE_NAME: config-server
+
+build-config-server:
+  extends: .build-image
+  variables:
+    MODULE_NAME: config-server
     LATEST_IMAGE: "$CI_REGISTRY_IMAGE/config-server:latest"

@@ -11,9 +11,6 @@ variables:
 services:
   - docker:20.10.7-dind
 
-before_script:
-  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-
 compile:
   image: maven:3.6-openjdk-15-slim
   stage: build
@@ -24,6 +21,7 @@ build-image:
   stage: build-image
   script:
     - cd config-server
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker pull $LATEST_IMAGE || true
     - docker build --cache-from $LATEST_IMAGE -t $LATEST_IMAGE .
     - docker push $LATEST_IMAGE

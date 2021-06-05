@@ -2,8 +2,8 @@ image: docker:20.10.7
 
 stages:
   - build
+  - package
   - build-image
-  - deploy
 
 variables:
   DOCKER_TLS_CERTDIR: "/certs"
@@ -16,6 +16,15 @@ compile:
   stage: build
   script:
     - mvn compile
+
+package:
+  image: maven:3.6-openjdk-15-slim
+  stage: build
+  script:
+    - mvn package -am -pl config-server
+  artifacts:
+    paths:
+      - ./config-server/target/*.jar
 
 build-image:
   stage: build-image
